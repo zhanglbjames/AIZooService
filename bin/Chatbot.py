@@ -13,6 +13,7 @@ from extlib.textrank4zh import TextRank4Keyword
 from datetime import datetime
 
 from conf.setting import *
+from util.tools import Logger
 reload(sys)
 
 '''
@@ -20,18 +21,20 @@ reload(sys)
 Created 2017/5/8
 '''
 
+
 class ChatModel(object):
-    def __init__(self, logger):
+
+    def __init__(self):
         # status: 0 - init object; 1 - finished file check; 2 - finished init chat model;
         # 3 - close all resource, wait to stop
         self.__status = 0
-        self.__logger = logger
+        self.__init_chat()
 
     '''
-    public method
+    private method
     初始化所有资源及模型
     '''
-    def init_chat(self):
+    def __init_chat(self):
         self.__file_check()
         self.__init_model()
 
@@ -54,7 +57,6 @@ class ChatModel(object):
         public method
         获取问题的答案
         :param question
-        :return status the answer status 0 means have searched the answer, 1 means have not search the answer
         :return content the answer content
     '''
     def get_answer(self, question):
@@ -66,7 +68,7 @@ class ChatModel(object):
         if check_input_status == 0:
             answer = self.__get_model_answer(question)
             status, content = self.__check_output_answer(answer,question)
-            return status, content
+            return content
 
     '''
         private method
@@ -77,20 +79,19 @@ class ChatModel(object):
         try:
             self.__questionLogFileObj = codecs.open(questionLogFile, "a+", "utf-8")
         except IOError:
-            print "Error：cannot open log file，please check and try again"
+            Logger.error("cannot open log file，please check and try again")
             sys.exit(1)
-
         # tmp directory checkAndCheck
         try:
             if not os.path.exists(tmpDir):
-                os.mkdir("../resource/tmp")
+                os.mkdir(tmpDir)
         except IOError:
-            print "Error：cannot make tmp directory，please check and try again"
+            Logger.error("cannot make tmp directory，please check and try again")
             sys.exit(1)
 
         # open and read question-answer pair file
         if not os.path.exists(questionAnswerPairFile):
-            print "Error：cannot find questionAnswerPairFile file，please check and try again"
+            Logger.error("cannot find questionAnswerPairFile file，please check and try again")
             sys.exit(1)
 
         self.__status = 1
@@ -166,18 +167,16 @@ class ChatModel(object):
        :return boolean if the question is long enough, return True
        :return status the check status 0 means ok, 1 means null, 2 means not null but so short
     '''
-
-    def __check_input_question(self, question):
+    @staticmethod
+    def __check_input_question(question):
         status = 0
         if len(question) == 0:
-            self.__logger.warning("Input question string is null")
-            print "Error:Input question string is null"
+            Logger.error("Input question string is null")
             status = 1
             return status
         else:
             if len(question) < 8:
-                self.__logger.warning("Input question string is short than 8 characters")
-                print "Error:Input question string is short than 8 characters"
+                Logger.error("Input question string is short than 8 characters")
                 status = 2
                 return status
         return status
@@ -207,15 +206,14 @@ class ChatModel(object):
 
 if __name__ == "__main__":
     print (sys.getdefaultencoding())
-    chat = ChatModel(logger)
-    chat.init_chat()
+    chat = ChatModel()
     a_question = "大熊猫喜欢吃什么？"
-    a_status, a_content = chat.get_answer(a_question)
+    a_content = chat.get_answer(a_question)
 
     # content is utf-8
-    print a_status, a_content
+    print a_content
     while True:
         if chat.get_status() == 3:
             break
         chat.close_resource()
-    print "close chatbot"
+    Logger.info("close chatbot")

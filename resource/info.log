@@ -1,0 +1,20 @@
+2017-05-08 21:12:36 __init__.py[line:111] DEBUG Building prefix dict from the default dictionary ...
+2017-05-08 21:12:36 __init__.py[line:131] DEBUG Loading model from cache c:\users\zss-ma~1\appdata\local\temp\jieba.cache
+2017-05-08 21:12:36 __init__.py[line:163] DEBUG Loading model cost 0.338 seconds.
+2017-05-08 21:12:36 __init__.py[line:164] DEBUG Prefix dict has been built succesfully.
+2017-05-08 21:13:14 __init__.py[line:111] DEBUG Building prefix dict from the default dictionary ...
+2017-05-08 21:13:14 __init__.py[line:131] DEBUG Loading model from cache c:\users\zss-ma~1\appdata\local\temp\jieba.cache
+2017-05-08 21:13:14 __init__.py[line:163] DEBUG Loading model cost 0.354 seconds.
+2017-05-08 21:13:14 __init__.py[line:164] DEBUG Prefix dict has been built succesfully.
+2017-05-08 21:13:27 __init__.py[line:111] DEBUG Building prefix dict from the default dictionary ...
+2017-05-08 21:13:27 __init__.py[line:131] DEBUG Loading model from cache c:\users\zss-ma~1\appdata\local\temp\jieba.cache
+2017-05-08 21:13:27 __init__.py[line:163] DEBUG Loading model cost 0.332 seconds.
+2017-05-08 21:13:27 __init__.py[line:164] DEBUG Prefix dict has been built succesfully.
+2017-05-08 22:06:02 __init__.py[line:111] DEBUG Building prefix dict from the default dictionary ...
+2017-05-08 22:06:02 __init__.py[line:131] DEBUG Loading model from cache c:\users\zss-ma~1\appdata\local\temp\jieba.cache
+2017-05-08 22:06:02 __init__.py[line:163] DEBUG Loading model cost 0.347 seconds.
+2017-05-08 22:06:02 __init__.py[line:164] DEBUG Prefix dict has been built succesfully.
+2017-05-09 13:33:11 __init__.py[line:111] DEBUG Building prefix dict from the default dictionary ...
+2017-05-09 13:33:11 __init__.py[line:131] DEBUG Loading model from cache c:\users\zss-ma~1\appdata\local\temp\jieba.cache
+2017-05-09 13:33:11 __init__.py[line:163] DEBUG Loading model cost 0.369 seconds.
+2017-05-09 13:33:11 __init__.py[line:164] DEBUG Prefix dict has been built succesfully.
