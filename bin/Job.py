@@ -18,3 +18,12 @@ class SocketTask(Task):
         data = str(self.__socket.recv(1024))
         content = self.__chatModel.get_answer(data)
         self.__socket.send(content)
+
+
+class TestTask(Task):
+    def __init__(self, _list):
+        super(TestTask,self).__init__()
+        self.__list = _list
+
+    def do_task(self):
+        self.__list.append("h")

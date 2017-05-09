@@ -97,15 +97,27 @@ class ThreadPool(object):
             self.__pool_condition.release()
 
 
+'''
+测试线程池的并发一致性
+'''
 if __name__ == "__main__":
+    # 测试任务类
+    class TestTask(Task):
+        def __init__(self, _list, num):
+            super(TestTask, self).__init__()
+            self.__list = _list
+            self.__num = num
+
+        def do_task(self):
+            self.__list.append(self.__num)
+
+    # 全局测试列表
+    int_list = []
     pool = ThreadPool()
-
-    count = 0
-
-    def print_text(count = count):
-        count += 1
-
     for i in range(100):
-        pool.execute(print_text)
-    time.sleep(3)
-    print count
+        task = TestTask(int_list,i)
+        pool.execute(task)
+    pool.shutdown()
+    print len(int_list)
+    print int_list
+
