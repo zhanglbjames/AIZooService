@@ -84,7 +84,7 @@ class ThreadPool(object):
     def __add_worker(self):
         self.__pool_condition.acquire()
         try:
-            if len(self.__pool) > self.__max_thread_num:
+            if len(self.__pool) >= self.__max_thread_num:
                 Logger.info("exceed the max_thread_num, add failed")
                 self.__pool_condition.wait()
             else:
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     # 全局测试列表
     int_list = []
     pool = ThreadPool()
-    for i in range(100):
+    for i in range(1000):
         task = TestTask(int_list,i)
         pool.execute(task)
     pool.shutdown()

@@ -11,7 +11,7 @@ from whoosh.index import create_in
 from whoosh.qparser import QueryParser
 from extlib.textrank4zh import TextRank4Keyword
 from datetime import datetime
-
+import threading
 from conf.setting import *
 from util.tools import Logger
 reload(sys)
@@ -29,6 +29,7 @@ class ChatModel(object):
         # 3 - close all resource, wait to stop
         self.__status = 0
         self.__init_chat()
+        self.__file_condition = threading.Condition()
 
     '''
     private method
@@ -189,7 +190,7 @@ class ChatModel(object):
         :return content the answer content
     '''
 
-    def __check_output_answer(self, answer,question):
+    def __check_output_answer(self, answer, question):
         status = 0
         if len(answer) == 0:
             content = "太难了，要不换个问法试试"
@@ -198,10 +199,20 @@ class ChatModel(object):
             #print answer[0]['content']
             content = str(answer[0]['content'].split(':')[1]).replace('u\'', '\'')
         now = datetime.now()
-        self.__questionLogFileObj.write("label[" + str(status) + "]"
-                                        + now.strftime("%Y-%m-%d %H:%M:%S") + ":"
-                                        + question
-                                        + "\n")
+
+        # 多个线程对其问题的记录进行读写，要加锁
+        if self.__file_condition.acquire:
+
+            '''
+            label[0] - 表示可以从问答对中找到
+            label[1] - 表示不能从问答对中找到
+            '''
+            self.__questionLogFileObj.write("label[" + str(status) + "]"
+                                            + now.strftime("%Y-%m-%d %H:%M:%S") + ":"
+                                            + question
+                                            + "\n")
+            self.__file_condition.release()
+
         return status, content
 
 if __name__ == "__main__":
