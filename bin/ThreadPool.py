@@ -100,6 +100,7 @@ class ThreadPool(object):
 '''
 测试线程池的并发一致性
 '''
+
 if __name__ == "__main__":
     # 测试任务类
     class TestTask(Task):
