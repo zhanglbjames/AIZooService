@@ -202,6 +202,10 @@ class ChatModel(object):
 
         while(True):
             if self.__file_condition.acquire():
+                '''
+                label-0: 能在问答对中找到
+                label-1: 不能在问答中找到
+                '''
                 self.__questionLogFileObj.write("label[" + str(status) + "]"
                                                 + now.strftime("%Y-%m-%d %H:%M:%S") + ":"
                                                 + question
