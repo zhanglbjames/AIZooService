@@ -200,18 +200,14 @@ class ChatModel(object):
             content = str(answer[0]['content'].split(':')[1]).replace('u\'', '\'')
         now = datetime.now()
 
-        # 多个线程对其问题的记录进行读写，要加锁
-        if self.__file_condition.acquire:
-
-            '''
-            label[0] - 表示可以从问答对中找到
-            label[1] - 表示不能从问答对中找到
-            '''
-            self.__questionLogFileObj.write("label[" + str(status) + "]"
-                                            + now.strftime("%Y-%m-%d %H:%M:%S") + ":"
-                                            + question
-                                            + "\n")
-            self.__file_condition.release()
+        while(True):
+            if self.__file_condition.acquire():
+                self.__questionLogFileObj.write("label[" + str(status) + "]"
+                                                + now.strftime("%Y-%m-%d %H:%M:%S") + ":"
+                                                + question
+                                                + "\n")
+                self.__file_condition.release()
+                break
 
         return status, content
 

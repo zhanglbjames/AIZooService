@@ -22,7 +22,7 @@ loggingFile = "resource/info.log"
 
 # server settings
 serverLocalHost = "localhost"
-serverLocalPort = 8888
+serverLocalPort = 9034
 
 threadPoolMaxNum = 10
 taskMaxNum = 10
